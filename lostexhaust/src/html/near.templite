@@ -1,0 +1,3 @@
+<html>
+${ write("Hello world!") }$
+</html>
