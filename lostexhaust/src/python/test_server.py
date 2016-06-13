@@ -9,9 +9,9 @@ if len(sys.argv) != 2:
 
 name = sys.argv[1]
 
-if name == "near":
-    z = Near()
-    print(z.get())
-    sys.exit(0)
+pages = { "near" : Near() }
 
-print("Invalid page")
+if name in pages:
+    print(pages[name].get())
+else:
+    print("Invalid page")

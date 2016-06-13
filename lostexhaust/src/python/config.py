@@ -1,7 +1,11 @@
+import json
 
-class Config:
-    def __init__(self, projectRoot):
-        self.projectRoot = projectRoot
+config = dict()
 
 def loadConfig(filename):
-    return Config("/Users/jake/Development/lostexhaust-python/lostexhaust")
+    if filename in config:
+        return config[filename]
+    else:
+        with open(filename, "r") as configFile:
+            config[filename] = json.loads(configFile.read())
+            return config[filename]
