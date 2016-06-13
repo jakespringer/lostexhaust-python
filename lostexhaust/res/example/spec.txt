@@ -1,0 +1,9 @@
+This is a demo of LostExhaust using twenty users named
+after colors. Find each of the users in persons.txt.
+To log in, each of the users' usernames is simply their
+last name (the color) in lowercase. For example, F.
+Fushcia's username is 'fushcia' (without quotes.) The
+password that corresponds with a given user is their
+username with the number '1' appended. For example,
+the password that corresponds with the username
+'fushcia' is 'fushcia1' (without quotes.)
