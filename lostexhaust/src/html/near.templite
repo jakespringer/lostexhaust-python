@@ -1,3 +1,49 @@
 <html>
-${ write("Hello world!") }$
-</html>
+<head>
+  <link rel="stylesheet" type="text/css" href="css/template.css"></link>
+</head>
+<body>
+  <div class="portal"><ul class="portal">
+    <li class="ph"><span class="ph">Welcome, ${ write(user["firstname"]) }$.<br><a class="ph" href="/logout">Sign out</a></span></li>
+    <li class="pe"><a class="pe" href="javascript:;"><span class="pe peselected">Households near me</span></a></li>
+    <li class="pe"><a class="pe" href="home.html"><span class="pe">My household</span></a></li>
+    <li class="pe"><a class="pe" href="profile.html"><span class="pe">My profile</span></a></li>
+  </ul></div>
+  <div class="content">
+    <h1 class="page-title">Households Near Me</h1>
+    <div class="near-content"><span class="household-select">Current household:
+    <select onchange="javascript:window.location.href='/near.html?h='+this.selectedIndex;">
+      ${ for i in range(0, len(user_households)): }$
+	     ${ if i == user_household_selected: }$
+	      <option selected="selected" value="${ write(i) }$">${ write(user_households[i]["address"]) }$</option>
+	     ${ :else: }$
+	      <option value="${ write(i) }$">${ write(user_households[i]["address"]) }$</option>
+	     ${ :end-if }$
+	    ${ :end-for }$
+	</select></span><hr class="near">
+	${ for i in range(0, len(carpools)): }$
+    ${ (carpool_household, carpool_household_residents, distance) = carpools[i] }$
+  	<div class="household">
+  	  <a name="h${ write(i) }$"></a>
+  	  <span class="address"><a class="household" href="household.html?h=${ write(carpool_household["id"]) }$">${ write(carpool_household["address"]) }$</a> (<b>${ write(distance) }$ mi</b>)</span><br>
+  	  <span class="resident-pictures">
+  	  	${ for j in range(0, min(4, len(carpool_household_residents))): }$
+  	  	  ${ if carpool_household_residents[j]["affiliation"] != "Parent": }$<img width="80" height="100" src="img/${ write(carpool_household_residents[j]["id"]) }$.jpg">${ :end-if }$
+  	  	${ :end-for }$
+  	  </span>
+  	  <span class="residents">
+  	  	<h5 class="residents">Residents</h5>
+  	  	${ for j in range(0, min(4, len(carpool_household_residents))): }$
+  	  	  ${ if (j < 3) or (len(carpool_household_residents) == 4): }$
+  	  	    <a class="residents" href="person.html?p=${ write(carpool_household_residents[j]["id"]) }$">${ write(carpool_household_residents[j]["firstname"]) }$ ${ write(carpool_household_residents[j]["lastname"]) }$</a> ${ if len(carpool_household_residents[j]["grade_level"]) > 0: }$(Grade ${ write(carpool_household_residents[j]["grade_level"]) }$)${ :end-if }$<br>
+  	  	  ${ :else: }$
+  	  	    and more...
+  	  	  ${ :end-if }$
+  	  	${ :end-for }$
+  	  </span>
+  	</div><br><hr class="near">
+  	${ :end-for }$
+  	<center><a class="residents" href="/near.html?more=${ write(max(num_results + 10, 10)) }$#h${ write(max(num_results, 0)) }$">See more</a> | <a class="residents" href="/near.html?more=${ write(max(num_results - 10, 10)) }$">See less</a></center>
+  	</div>
+  </div>
+</body>
